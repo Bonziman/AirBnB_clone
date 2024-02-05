@@ -2,7 +2,6 @@
 """Defines the BaseModel class"""
 from uuid import uuid4
 from datetime import datetime
-import time
 
 
 class BaseModel:
@@ -39,7 +38,3 @@ class BaseModel:
         idict["updated_at"] = self.updated_at.isoformat()
         idict["created_at"] = self.created_at.isoformat()
         return idict
-
-obj1 = BaseModel()
-obj1.name = "user"
-print(obj1.to_dict())
