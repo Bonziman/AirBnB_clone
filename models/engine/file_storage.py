@@ -5,7 +5,7 @@ from ..base_model import BaseModel
 
 
 class FileStorage:
-    """Handles serialization and deserialization of instances 
+    """Handles serialization and deserialization of instances
     to/from JSON file."""
     __file_path = "file.json"
     __objects = {}
@@ -15,7 +15,10 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id
+        Args:
+            obj: the obj to set in __objects
+        """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
 

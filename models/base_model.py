@@ -3,6 +3,8 @@
 from uuid import uuid4
 from datetime import datetime
 import models
+
+
 class BaseModel:
     """The BaseModel for HBNB project."""
 
@@ -16,12 +18,12 @@ class BaseModel:
         self.id = str(uuid4())
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
-        
+
         ignored_attr = ['__class__']
-        if len(kwargs) !=0:
+        if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key in ['created_at', 'updated_at']:
-                        setattr(self, key, datetime.strptime(value, tform))
+                    setattr(self, key, datetime.strptime(value, tform))
                 elif key not in ignored_attr:
                     setattr(self, key, value)
         else:
