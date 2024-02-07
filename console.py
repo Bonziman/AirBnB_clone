@@ -2,6 +2,7 @@
 "the console module that produces a shell like console to manage the project"
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import re
 from shlex import split
@@ -27,8 +28,8 @@ def parse(arg):
 
 class HBNBCommand(cmd.Cmd):
     """custpom interpreter for the HBNB project"""
-    """prompt = "\033[1;32m(hbnb)\033[0m """
-    prompt = "(hbnb) "
+    prompt = "\033[1;32m(hbnb)>> \033[0m"
+    """prompt = "(hbnb) """
     __classes = {
             "BaseModel",
             "User",
@@ -127,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
                 for key, instance in storage.all().items():
                     if instance.__class__.__name__ == class_name:
                         result.append(str(instance))
-                        print(result)
+                print(result)
 
     def do_update(self, arg):
         """Updates an instance based on class name and id b adding\
@@ -155,7 +156,7 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
         arg_value = args[3]
-        if not storage.all()[key]:
+        if key not in storage.all():
             print("** no instance found **")
             return
         else:
