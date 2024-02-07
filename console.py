@@ -8,6 +8,7 @@ from shlex import split
 
 
 def parse(arg):
+    """parses the args and splits them"""
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
     if curly_braces is None:
@@ -25,6 +26,8 @@ def parse(arg):
         return retl
 
 class HBNBCommand(cmd.Cmd):
+    """custpom interpreter for the HBNB project"""
+    """prompt = "\033[1;32m(hbnb)\033[0m """
     prompt = "(hbnb) "
     __classes = {
             "BaseModel",
@@ -55,6 +58,30 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(eval(argl[0])().id)
             storage.save()
+
+    def do_show(self, arg):
+        """Prints the string representation of an instance based on:
+        the class name and id
+        Usage: show <class> <id>
+        """
+        args = parse(arg)
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+        class_name = args[0]
+        if class_name not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+            return
+        elif len(args) == 1:
+            print("** instance id missing **")
+            return
+        obj_id = args[1]
+        key = "{}.{}".format(class_name, obj_id)
+        if key in storage.all():
+            instance = storage.all()[key]
+            print(instance)
+        else:
+            print("** no instance found **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
