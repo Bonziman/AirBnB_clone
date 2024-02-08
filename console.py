@@ -1,8 +1,14 @@
 #!/usr/bin/python3
-"the console module that produces a shell like console to manage the project"
+"""the console module that produces a shell like console to\
+manage the project"""
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 import re
 from shlex import split
@@ -26,10 +32,11 @@ def parse(arg):
         retl.append(curly_braces.group())
         return retl
 
+
 class HBNBCommand(cmd.Cmd):
     """custpom interpreter for the HBNB project"""
+
     prompt = "\033[1;32m(hbnb)>> \033[0m"
-    """prompt = "(hbnb) """
     __classes = {
             "BaseModel",
             "User",
@@ -39,6 +46,7 @@ class HBNBCommand(cmd.Cmd):
             "Amenity",
             "Review"
             }
+
     def do_quit(self, arg):
         """Use quit command to exit the program"""
         return True
@@ -163,9 +171,13 @@ class HBNBCommand(cmd.Cmd):
             instance = storage.all()[key]
             setattr(instance, arg_name, arg_value)
             storage.save()
-        
 
-
+    def default(self, line):
+        """Called when the command is not recognized"""
+        if line.endswith(".all()"):
+            parts = line.split('.')
+            class_name = parts[0]
+            self.do_all(class_name)
 
 
 if __name__ == '__main__':
