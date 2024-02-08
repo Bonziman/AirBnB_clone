@@ -174,10 +174,27 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """Called when the command is not recognized"""
+        show_match = re.match(r'^(\w+)\.show\("([^"]+)"\)$', line)
         if line.endswith(".all()"):
             parts = line.split('.')
             class_name = parts[0]
             self.do_all(class_name)
+        elif line.endswith(".count()"):
+            parts = line.split('.')
+            class_name = parts[0]
+            count = 0
+            if class_name in HBNBCommand.__classes:
+                for key, instance in storage.all().items():
+                    if instance.__class__.__name__ == class_name:
+                        count += 1
+                print(count)
+            else:
+                print("** class doesn't exist **")
+        elif show_match:
+            class_name = show_match.group(1)
+            obj_id = show_match.group(2)
+            arg = class_name + " " + obj_id
+            self.do_show(arg)
 
 
 if __name__ == '__main__':
