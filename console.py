@@ -175,6 +175,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """Called when the command is not recognized"""
         show_match = re.match(r'^(\w+)\.show\("([^"]+)"\)$', line)
+        destroy_match = re.match(r'^(\w+)\.destroy\("([^"]+)"\)$', line)
         if line.endswith(".all()"):
             parts = line.split('.')
             class_name = parts[0]
@@ -195,6 +196,11 @@ class HBNBCommand(cmd.Cmd):
             obj_id = show_match.group(2)
             arg = class_name + " " + obj_id
             self.do_show(arg)
+        elif destroy_match:
+            class_name = destroy_match.group(1)
+            obj_id = destroy_match.group(2)
+            arg = class_name + " " + obj_id
+            self.do_destroy(arg)
 
 
 if __name__ == '__main__':
