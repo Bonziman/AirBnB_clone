@@ -2,6 +2,7 @@
 """Defines the BaseModel class"""
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -18,6 +19,16 @@ class BaseModel:
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
 
+        ignored_attr = ['__class__']
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key in ['created_at', 'updated_at']:
+                    setattr(self, key, datetime.strptime(value, tform))
+                elif key not in ignored_attr:
+                    setattr(self, key, value)
+        else:
+            models.storage.new(self)
+
     def __str__(self):
         """Return the formated string representation"""
         return "[{}] ({}) {}".format(
@@ -29,6 +40,7 @@ class BaseModel:
     def save(self):
         """updates the updated_at with the current datetime."""
         self.updated_at = datetime.today()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all k/v of __dict__ of
