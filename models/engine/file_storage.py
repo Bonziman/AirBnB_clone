@@ -3,6 +3,11 @@
 import json
 from ..base_model import BaseModel
 from ..user import User
+from ..state import State
+from ..city import City
+from ..amenity import Amenity
+from ..place import Place
+from ..review import Review
 
 
 class FileStorage:
@@ -34,8 +39,8 @@ class FileStorage:
     def reload(self):
         """Deserializes the json file to __objects"""
         try:
-            with open(self.__file_path, 'r') as file:
-                serialized_objects = json.load(file)
+            with open(self.__file_path, 'r') as f:
+                serialized_objects = json.load(f)
                 for key, value in serialized_objects.items():
                     class_name, obj_id = key.split('.')
                     self.__objects[key] = eval(class_name)(**value)
