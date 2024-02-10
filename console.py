@@ -173,7 +173,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def default(self, line):
-        """Called when the command is not recognized"""
+        """Called when the command is not recognized."""
         show_match = re.match(r'^(\w+)\.show\("([^"]+)"\)$', line)
         destroy_match = re.match(r'^(\w+)\.destroy\("([^"]+)"\)$', line)
         if line.endswith(".all()"):
