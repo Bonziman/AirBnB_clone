@@ -12,7 +12,6 @@ from models.base_model import BaseModel
 from models.user import User
 
 
-
 class TestConsole(unittest.TestCase):
     """Base class for testing Console.
     """
