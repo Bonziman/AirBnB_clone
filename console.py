@@ -187,7 +187,10 @@ class HBNBCommand(cmd.Cmd):
         """Called when the command is not recognized."""
         show_match = re.match(r'^(\w+)\.show\("([^"]+)"\)$', line)
         destroy_match = re.match(r'^(\w+)\.destroy\("([^"]+)"\)$', line)
-        update_match = re.match(r'^(\w+)\.update\(("[^"]+"),\s*"([^"]+)",\s*"([^"]+)"\)$', line)
+        update_match = re.match(r'^(\w+)\.update\('
+                                r'("[^"]+"),\s*'
+                                r'"([^"]+)",\s*'
+                                r'"([^"]+)"\)$', line)
         if line.endswith(".all()"):
             parts = line.split('.')
             class_name = parts[0]
@@ -218,8 +221,8 @@ class HBNBCommand(cmd.Cmd):
             obj_id = update_match.group(2)
             attr_name = update_match.group(3)
             attr_value = update_match.group(4)
-            arg = class_name + " " + obj_id + " " + attr_name + " " + attr_value
-            self.do_update(arg)
+            ar = class_name + " " + obj_id + " " + attr_name + " " + attr_value
+            self.do_update(ar)
         else:
             print("** Invalid syntax **")
 
