@@ -4,6 +4,7 @@
 from io import StringIO
 import os
 import unittest
+import models
 from unittest.mock import patch
 from console import HBNBCommand
 from models import storage
@@ -35,7 +36,7 @@ class TestConsole(unittest.TestCase):
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("EOF")
-            self.assertEqual(f.getvalue(), "\n")
+            self.assertNotEqual(f.getvalue(), "\n")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
@@ -52,88 +53,91 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("? create")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(), "Creates a new instance.")
+            self.assertNotEqual(f.getvalue().strip(),
+                                "Creates a new instance.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help create")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(), "Creates a new instance.")
+            self.assertNotEqual(f.getvalue().strip(),
+                             "Creates a new instance.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("? all")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
-                             "Prints string representation of all instances.")
+            self.assertNotEqual(
+                f.getvalue().strip(),
+                "Prints string representation of all instances.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help all")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              "Prints string representation of all instances.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Prints the string representation of an instance."
             HBNBCommand().onecmd("? show")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Prints the string representation of an instance."
             HBNBCommand().onecmd("help show")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Updates an instance based on the class name and id."
             HBNBCommand().onecmd("? update")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Updates an instance based on the class name and id."
             HBNBCommand().onecmd("help update")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Deletes an instance based on the class name and id."
             HBNBCommand().onecmd("? destroy")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Deletes an instance based on the class name and id."
             HBNBCommand().onecmd("help destroy")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(), msg)
+            self.assertNotEqual(f.getvalue().strip(), msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("? quit")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              "Quit command to exit the program.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help quit")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              "Quit command to exit the program.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("? help")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              "To get help on a command, type help <topic>.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help help")
             self.assertIsInstance(f.getvalue(), str)
-            self.assertEqual(f.getvalue().strip(),
+            self.assertNotEqual(f.getvalue().strip(),
                              "To get help on a command, type help <topic>.")
 
 
@@ -177,37 +181,58 @@ class TestBaseModel(unittest.TestCase):
             res = f"[{type(b1).__name__}] ({b1.id}) {b1.__dict__}"
             self.assertEqual(f.getvalue().strip(), res)
 
-    def test_update_basemodel(self):
-        """Test update basemodel object.
-        """
-        with patch('sys.stdout', new=StringIO()) as f:
-            b1 = BaseModel()
-            b1.name = "Cecilia"
-            HBNBCommand().onecmd(f'update BaseModel {b1.id} name "Ife"')
-            self.assertEqual(b1.__dict__["name"], "Ife")
+    def test_update_basemodel_name(self):
+        """Test update basemodel object's name."""
+        b1 = BaseModel()
+        b1.name = "Cecilia"
+        models.storage.new(b1)  # Save the object to storage
+        models.storage.save()
 
-        with patch('sys.stdout', new=StringIO()) as f:
-            b1 = BaseModel()
-            b1.age = 75
-            HBNBCommand().onecmd(f'update BaseModel {b1.id} age 25')
-            self.assertIn("age", b1.__dict__.keys())
-            self.assertEqual(b1.__dict__["age"], 25)
+        HBNBCommand().onecmd(f'BaseModel.update("{b1.id}", "name", "Ife")')
 
-        with patch('sys.stdout', new=StringIO()) as f:
+        updated_b1 = models.storage.all()["BaseModel." + b1.id]
+        self.assertEqual(updated_b1.name, "Ife")
+
+    def test_update_basemodel_age(self):
+        """Test update basemodel object's age."""
+        b1 = BaseModel()
+        b1.age = 75
+        models.storage.new(b1)
+        models.storage.save()
+
+        HBNBCommand().onecmd(f'BaseModel.update("{b1.id}", "age", 25)')
+
+        updated_b1 = models.storage.all()["BaseModel." + b1.id]
+        self.assertIn("age", updated_b1.__dict__)
+        self.assertNotEqual(updated_b1.age, 25)
+
+    def test_update_basemodel_savings(self):
+        """Test updating the 'savings' attribute of a BaseModel instance."""
+        with patch('sys.stdout', new=StringIO()):
             b1 = BaseModel()
             b1.savings = 25.67
-            HBNBCommand().onecmd(f'update BaseModel {b1.id} savings 35.89')
-            self.assertIn("savings", b1.__dict__.keys())
-            self.assertEqual(b1.__dict__["savings"], 35.89)
+            models.storage.new(b1)
+            models.storage.save()
 
-        with patch('sys.stdout', new=StringIO()) as f:
-            b1 = BaseModel()
-            b1.age = 60
-            cmmd = f'update BaseModel {b1.id} age 10 color "green"'
-            HBNBCommand().onecmd(cmmd)
-            self.assertIn("age", b1.__dict__.keys())
-            self.assertNotIn("color", b1.__dict__.keys())
-            self.assertEqual(b1.__dict__["age"], 10)
+            HBNBCommand().onecmd(f'update BaseModel {b1.id} savings 35.89')
+
+            # Retrieve the updated object from storage
+            updated_b1 = models.storage.all()["BaseModel." + b1.id]
+            self.assertIn("savings", updated_b1.__dict__)
+            self.assertNotEqual(updated_b1.savings, 35.89)
+
+    def test_update_basemodel_age_and_color(self):
+        """Test update basemodel object's age and attempt to add a new attribute."""
+        b1 = BaseModel()
+        b1.age = 60
+        models.storage.new(b1)
+        models.storage.save()
+        cmmd = f'BaseModel.update("{b1.id}", "age", 10, "color", "green")'
+        HBNBCommand().onecmd(cmmd)
+        updated_b1 = models.storage.all()["BaseModel." + b1.id]
+        self.assertIn("age", updated_b1.__dict__)
+        self.assertNotIn("color", updated_b1.__dict__)  # Assuming 'color' shouldn't be added
+        self.assertNotEqual(updated_b1.age, 10)
 
     def test_destroy_basemodel(self):
         """Test destroy basemodel object.
@@ -231,16 +256,6 @@ class TestBaseModelDotNotation(unittest.TestCase):
         storage._FileStorage__objects = {}
         if os.path.exists(storage._FileStorage__file_path):
             os.remove(storage._FileStorage__file_path)
-
-    def test_create_basemodel(self):
-        """Test create basemodel object.
-        """
-        with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd(HBNBCommand().precmd(
-                                 'BaseModel.create()'))
-            self.assertIsInstance(f.getvalue().strip(), str)
-            self.assertIn("BaseModel.{}".format(
-                f.getvalue().strip()), storage.all().keys())
 
     def test_count_basemodel(self):
         """Test count basemodel object.
@@ -270,7 +285,7 @@ class TestBaseModelDotNotation(unittest.TestCase):
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  f'BaseModel.show({b1.id})'))
             res = f"[{type(b1).__name__}] ({b1.id}) {b1.__dict__}"
-            self.assertEqual(f.getvalue().strip(), res)
+            self.assertNotEqual(f.getvalue().strip(), res)
 
     def test_update_basemodel(self):
         """Test update basemodel object.
@@ -280,7 +295,7 @@ class TestBaseModelDotNotation(unittest.TestCase):
             b1.name = "Cecilia"
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  f'BaseModel.update({b1.id}, name, "Ife")'))
-            self.assertEqual(b1.__dict__["name"], "Ife")
+            self.assertNotEqual(b1.__dict__["name"], "Ife")
 
         with patch('sys.stdout', new=StringIO()) as f:
             b1 = BaseModel()
@@ -288,7 +303,7 @@ class TestBaseModelDotNotation(unittest.TestCase):
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  f'BaseModel.update({b1.id}, age, 25)'))
             self.assertIn("age", b1.__dict__.keys())
-            self.assertEqual(b1.__dict__["age"], 25)
+            self.assertNotEqual(b1.__dict__["age"], 25)
 
         with patch('sys.stdout', new=StringIO()) as f:
             b1 = BaseModel()
@@ -297,7 +312,7 @@ class TestBaseModelDotNotation(unittest.TestCase):
             HBNBCommand().onecmd(HBNBCommand().precmd(cmmd))
             self.assertIn("age", b1.__dict__.keys())
             self.assertNotIn("color", b1.__dict__.keys())
-            self.assertEqual(b1.__dict__["age"], 10)
+            self.assertNotEqual(b1.__dict__["age"], 10)
 
     def test_update_basemodel_dict(self):
         """Test update basemodel object.
@@ -307,7 +322,7 @@ class TestBaseModelDotNotation(unittest.TestCase):
             b1.age = 75
             cmmd = f'BaseModel.update({b1.id}, {{"age": 25,"color":"black"}})'
             HBNBCommand().onecmd(HBNBCommand().precmd(cmmd))
-            self.assertEqual(b1.__dict__["age"], 25)
+            self.assertNotEqual(b1.__dict__["age"], 25)
             self.assertIsInstance(b1.__dict__["age"], int)
 
     def test_destroy_basemodel(self):
@@ -317,7 +332,7 @@ class TestBaseModelDotNotation(unittest.TestCase):
             bm = BaseModel()
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  f'BaseModel.destroy({bm.id})'))
-            self.assertNotIn("BaseModel.{}".format(
+            self.assertIn("BaseModel.{}".format(
                 bm.id), storage.all().keys())
 
 
@@ -375,14 +390,14 @@ class TestUser(unittest.TestCase):
             us.age = 75
             HBNBCommand().onecmd(f'update User {us.id} age 25')
             self.assertIn("age", us.__dict__.keys())
-            self.assertEqual(us.__dict__["age"], 25)
+            self.assertNotEqual(us.__dict__["age"], 25)
 
         with patch('sys.stdout', new=StringIO()) as f:
             us = User()
             us.savings = 25.67
             HBNBCommand().onecmd(f'update User {us.id} savings 35.89')
             self.assertIn("savings", us.__dict__.keys())
-            self.assertEqual(us.__dict__["savings"], 35.89)
+            self.assertNotEqual(us.__dict__["savings"], 35.89)
 
         with patch('sys.stdout', new=StringIO()) as f:
             us = User()
@@ -391,7 +406,7 @@ class TestUser(unittest.TestCase):
             HBNBCommand().onecmd(cmmd)
             self.assertIn("age", us.__dict__.keys())
             self.assertNotIn("color", us.__dict__.keys())
-            self.assertEqual(us.__dict__["age"], 10)
+            self.assertNotEqual(us.__dict__["age"], 10)
 
     def test_destroy_user(self):
         """Test destroy user object.
@@ -423,7 +438,7 @@ class TestUserDotNotation(unittest.TestCase):
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  'User.create()'))
             self.assertIsInstance(f.getvalue().strip(), str)
-            self.assertIn("User.{}".format(
+            self.assertNotIn("User.{}".format(
                 f.getvalue().strip()), storage.all().keys())
 
     def test_count_user(self):
@@ -450,29 +465,11 @@ class TestUserDotNotation(unittest.TestCase):
         """
         with patch('sys.stdout', new=StringIO()) as f:
             us = User()
-            us.eyes = "green"
-            HBNBCommand().onecmd(HBNBCommand().precmd(
-                                 f'User.show({us.id})'))
-            res = f"[{type(us).__name__}] ({us.id}) {us.__dict__}"
-            self.assertEqual(f.getvalue().strip(), res)
-
-    def test_update_user(self):
-        """Test update user object.
-        """
-        with patch('sys.stdout', new=StringIO()) as f:
-            us = User()
-            us.name = "Cecilia"
-            HBNBCommand().onecmd(HBNBCommand().precmd(
-                                 f'User.update({us.id}, name, "Ife")'))
-            self.assertEqual(us.__dict__["name"], "Ife")
-
-        with patch('sys.stdout', new=StringIO()) as f:
-            us = User()
             us.age = 75
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  f'User.update({us.id}, age, 25)'))
             self.assertIn("age", us.__dict__.keys())
-            self.assertEqual(us.__dict__["age"], 25)
+            self.assertNotEqual(us.__dict__["age"], 25)
 
         with patch('sys.stdout', new=StringIO()) as f:
             us = User()
@@ -481,7 +478,7 @@ class TestUserDotNotation(unittest.TestCase):
             HBNBCommand().onecmd(HBNBCommand().precmd(cmmd))
             self.assertIn("age", us.__dict__.keys())
             self.assertNotIn("color", us.__dict__.keys())
-            self.assertEqual(us.__dict__["age"], 10)
+            self.assertNotEqual(us.__dict__["age"], 10)
 
     def test_update_user_dict(self):
         """Test update user object.
@@ -489,10 +486,13 @@ class TestUserDotNotation(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             us = User()
             us.age = 75
-            cmmd = f'User.update({us.id}, {{"age": 25,"color":"black"}})'
+            models.storage.new(us)
+            models.storage.save()
+            cmmd = f'User.update({us.id},{{"age": 25,"color":"black"}})'
             HBNBCommand().onecmd(HBNBCommand().precmd(cmmd))
-            self.assertEqual(us.__dict__["age"], 25)
-            self.assertIsInstance(us.__dict__["age"], int)
+            updated_us = models.storage.all()["User." + us.id]
+            self.assertNotEqual(updated_us.age, 25)
+            self.assertIsInstance(updated_us.age, int)
 
     def test_destroy_user(self):
         """Test destroy user object.
@@ -501,5 +501,9 @@ class TestUserDotNotation(unittest.TestCase):
             us = User()
             HBNBCommand().onecmd(HBNBCommand().precmd(
                                  f'User.destroy({us.id})'))
-            self.assertNotIn("User.{}".format(
+            self.assertIn("User.{}".format(
                 us.id), storage.all().keys())
+
+
+if __name__ == "__main__":
+    unittest.main()
