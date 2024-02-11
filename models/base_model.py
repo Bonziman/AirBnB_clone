@@ -15,19 +15,18 @@ class BaseModel:
             **kwargs(dict): key/value pairs of attributes.
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
-        self.id = str(uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
 
-        ignored_attr = ['__class__']
+
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key in ['created_at', 'updated_at']:
                     setattr(self, key, datetime.strptime(value, tform))
-                elif key not in ignored_attr:
+                elif key != '__class__':
                     setattr(self, key, value)
         else:
-            models.storage.new(self)
+            self.id = str(uuid4())
+            self.created_at = datetime.today()
+            self.updated_at = datetime.today()
 
     def __str__(self):
         """Return the formated string representation"""
