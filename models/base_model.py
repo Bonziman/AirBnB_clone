@@ -17,7 +17,6 @@ class BaseModel:
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
 
-
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key in ['created_at', 'updated_at']:
