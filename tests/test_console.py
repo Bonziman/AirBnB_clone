@@ -60,7 +60,7 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("help create")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             "Creates a new instance.")
+                                "Creates a new instance.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("? all")
@@ -73,42 +73,42 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("help all")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             "Prints string representation of all instances.")
+                                "Prints string representation of all inst.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Prints the string representation of an instance."
             HBNBCommand().onecmd("? show")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             msg)
+                                msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Prints the string representation of an instance."
             HBNBCommand().onecmd("help show")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             msg)
+                                msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Updates an instance based on the class name and id."
             HBNBCommand().onecmd("? update")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             msg)
+                                msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Updates an instance based on the class name and id."
             HBNBCommand().onecmd("help update")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             msg)
+                                msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Deletes an instance based on the class name and id."
             HBNBCommand().onecmd("? destroy")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             msg)
+                                msg)
 
         with patch('sys.stdout', new=StringIO()) as f:
             msg = "Deletes an instance based on the class name and id."
@@ -120,25 +120,25 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("? quit")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             "Quit command to exit the program.")
+                                "Quit command to exit the program.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help quit")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             "Quit command to exit the program.")
+                                "Quit command to exit the program.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("? help")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             "To get help on a command, type help <topic>.")
+                                "To get help, type help <topic>.")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("help help")
             self.assertIsInstance(f.getvalue(), str)
             self.assertNotEqual(f.getvalue().strip(),
-                             "To get help on a command, type help <topic>.")
+                                "To get help on a command, type help.")
 
 
 class TestBaseModel(unittest.TestCase):
@@ -222,7 +222,8 @@ class TestBaseModel(unittest.TestCase):
             self.assertNotEqual(updated_b1.savings, 35.89)
 
     def test_update_basemodel_age_and_color(self):
-        """Test update basemodel object's age and attempt to add a new attribute."""
+        """Test update basemodel object's age and attempt to add
+        a new attribute."""
         b1 = BaseModel()
         b1.age = 60
         models.storage.new(b1)
@@ -231,7 +232,7 @@ class TestBaseModel(unittest.TestCase):
         HBNBCommand().onecmd(cmmd)
         updated_b1 = models.storage.all()["BaseModel." + b1.id]
         self.assertIn("age", updated_b1.__dict__)
-        self.assertNotIn("color", updated_b1.__dict__)  # Assuming 'color' shouldn't be added
+        self.assertNotIn("color", updated_b1.__dict__)
         self.assertNotEqual(updated_b1.age, 10)
 
     def test_destroy_basemodel(self):
