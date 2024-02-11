@@ -34,9 +34,13 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    """custpom interpreter for the HBNB project"""
+    """custpom interpreter for the HBNB project
 
-    prompt = "\033[1;32m(hbnb)>> \033[0m"
+    Args:
+    cmd (str): commande
+    """
+
+    prompt = "(hbnb) "
     __classes = {
             "BaseModel",
             "User",
@@ -51,14 +55,20 @@ class HBNBCommand(cmd.Cmd):
         """Use quit command to exit the program"""
         return True
 
+    def emptyline(self):
+        """An empty line + ENTER shouldn’t execute anything"""
+        pass
+
     def do_EOF(self, arg):
         """Singal EOF to exit the program"""
+
         return True
 
     def do_create(self, arg):
         """Usage: create {class}
         creates a new class instance saves it into a JSON file, and print id
         """
+
         argl = parse(arg)
         if len(argl) == 0:
             print("** class name missing **")
@@ -73,6 +83,7 @@ class HBNBCommand(cmd.Cmd):
         the class name and id
         Usage: show <class> <id>
         """
+
         args = parse(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -176,6 +187,7 @@ class HBNBCommand(cmd.Cmd):
         """Called when the command is not recognized."""
         show_match = re.match(r'^(\w+)\.show\("([^"]+)"\)$', line)
         destroy_match = re.match(r'^(\w+)\.destroy\("([^"]+)"\)$', line)
+        update_match = re.match(r'^(\w+)\.update\("([^"]+)"\)$', line)
         if line.endswith(".all()"):
             parts = line.split('.')
             class_name = parts[0]
@@ -201,6 +213,14 @@ class HBNBCommand(cmd.Cmd):
             obj_id = destroy_match.group(2)
             arg = class_name + " " + obj_id
             self.do_destroy(arg)
+        elif update_match:
+            class_name = update_match.group(1)
+            args = parse(update_match.group(2))
+            obj_id = args[0]
+            attr_name = args[1]
+            attr_value = args[2]
+            arg = class_name + " " + obj_id + " " + attr_name + " " + attr_value
+            self.do_update(arg)
 
 
 if __name__ == '__main__':

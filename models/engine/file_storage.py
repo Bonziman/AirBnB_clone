@@ -13,6 +13,7 @@ from ..review import Review
 class FileStorage:
     """Handles serialization and deserialization of instances
     to/from JSON file."""
+
     __file_path = "file.json"
     __objects = {}
 
@@ -33,7 +34,7 @@ class FileStorage:
         serialized_objects = {}
         for key, obj in self.__objects.items():
             serialized_objects[key] = obj.to_dict()
-        with open(self.__file_path, 'w') as f:
+        with open(self.__file_path, 'w+') as f:
             json.dump(serialized_objects, f)
 
     def reload(self):
