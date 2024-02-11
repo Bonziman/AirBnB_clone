@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Defines the BaseModel class"""
+
 from uuid import uuid4
 from datetime import datetime
 
@@ -14,19 +15,17 @@ class BaseModel:
             **kwargs(dict): key/value pairs of attributes.
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
-        self.id = str(uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
 
-        ignored_attr = ['__class__']
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key in ['created_at', 'updated_at']:
                     setattr(self, key, datetime.strptime(value, tform))
-                elif key not in ignored_attr:
+                elif key != '__class__':
                     setattr(self, key, value)
         else:
-            models.storage.new(self)
+            self.id = str(uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """Return the formated string representation"""
