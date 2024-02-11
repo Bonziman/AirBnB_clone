@@ -26,8 +26,8 @@ class BaseModel:
                     setattr(self, key, value)
         else:
             self.id = str(uuid4())
-            self.created_at = datetime.today()
-            self.updated_at = datetime.today()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """Return the formated string representation"""
