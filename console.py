@@ -36,7 +36,7 @@ def parse(arg):
 class HBNBCommand(cmd.Cmd):
     """custpom interpreter for the HBNB project"""
 
-    prompt = "\033[1;32m(hbnb)>> \033[0m"
+    prompt = "(hbnb) "
     __classes = {
             "BaseModel",
             "User",
