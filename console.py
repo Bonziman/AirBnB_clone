@@ -34,7 +34,11 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    """custpom interpreter for the HBNB project"""
+    """custpom interpreter for the HBNB project
+
+    Args:
+    cmd (str): commande
+    """
 
     prompt = "(hbnb) "
     __classes = {
@@ -51,14 +55,20 @@ class HBNBCommand(cmd.Cmd):
         """Use quit command to exit the program"""
         return True
 
+    def emptyline(self):
+        """An empty line + ENTER shouldn’t execute anything"""
+        pass
+
     def do_EOF(self, arg):
         """Singal EOF to exit the program"""
+
         return True
 
     def do_create(self, arg):
         """Usage: create {class}
         creates a new class instance saves it into a JSON file, and print id
         """
+
         argl = parse(arg)
         if len(argl) == 0:
             print("** class name missing **")
@@ -73,6 +83,7 @@ class HBNBCommand(cmd.Cmd):
         the class name and id
         Usage: show <class> <id>
         """
+
         args = parse(arg)
         if len(args) == 0:
             print("** class name missing **")
