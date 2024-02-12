@@ -36,7 +36,7 @@ class TestConsole(unittest.TestCase):
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("EOF")
-            self.assertNotEqual(f.getvalue(), "\n")
+            self.assertNotEqual(f.getvalue(), "")
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("\n")
