@@ -28,6 +28,7 @@
     height: 100%;
     width: 25%;
     color: #484848;
+    padding-left: 40px;
     box-sizing: border-box;
     border-right: solid 1px #DDDDDD;
 }
@@ -35,5 +36,6 @@
     height: 100%;
     width: 25%;
     color: #484848;
+    padding-left: 40px;
     box-sizing: border-box;
 }
