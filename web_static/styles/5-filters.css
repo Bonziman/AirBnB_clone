@@ -5,6 +5,7 @@
     width: 100%;
     height: 70px;
     position: relative;
+    display: flex;
 }
 .filters button{
     font-size: 18px;
@@ -18,7 +19,7 @@
     top: 50%;
     transform: translateY(-50%);
     right: 30px;
-    display: flex;
+    
 }
 .filters button:hover{
     opacity: 90%;
