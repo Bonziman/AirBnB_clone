@@ -23,8 +23,12 @@
 .filters button:hover{
     opacity: 90%;
 }
-.locations.amenities{
+.locations{
     height: 100%;
     width: 25%;
     border-right: solid 1px #DDDDDD;
+}
+.locations{
+    height: 100%;
+    width: 25%;
 }
