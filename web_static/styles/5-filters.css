@@ -42,6 +42,7 @@
 .locations h3,
 .amenities h3{
     font-weight: 600;
+    margin-bottom: 0;
 }
 .locations h4,
 .amenities h4{
