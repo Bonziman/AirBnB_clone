@@ -27,11 +27,13 @@
 .locations{
     height: 100%;
     width: 25%;
+    color: #484848;
     box-sizing: border-box;
     border-right: solid 1px #DDDDDD;
 }
 .amenities{
     height: 100%;
     width: 25%;
+    color: #484848;
     box-sizing: border-box;
 }
