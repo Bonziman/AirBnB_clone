@@ -30,4 +30,6 @@ body{
     transform: translateY(-50%);
     right: 30px;
 }
-
+.filters button:hover{
+    opacity: 90%;
+}
