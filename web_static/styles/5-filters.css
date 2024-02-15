@@ -18,7 +18,7 @@
     top: 50%;
     transform: translateY(-50%);
     right: 30px;
-    display: inline-flex;
+    display: flex;
 }
 .filters button:hover{
     opacity: 90%;
@@ -26,10 +26,11 @@
 .locations{
     height: 100%;
     width: 25%;
+    box-sizing: border-box;
     border-right: solid 1px #DDDDDD;
 }
 .amenities{
     height: 100%;
     width: 25%;
-    color: ;
+    box-sizing: border-box;
 }
