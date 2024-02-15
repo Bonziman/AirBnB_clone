@@ -22,7 +22,7 @@
 .filters button:hover{
     opacity: 90%;
 }
-.filters locations, amenities{
+.locations.amenities{
     height: 100%;
     width: 25%;
     border-right: solid 1px #DDDDDD;
