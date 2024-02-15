@@ -5,6 +5,7 @@
     height: 70px;
     position: relative;
     display: flex;
+    align-items: center;
 }
 .filters button{
     font-size: 18px;
