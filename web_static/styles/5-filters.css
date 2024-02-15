@@ -1,5 +1,4 @@
 .filters{
-    color: white;
     border: solid 1px #DDDDDD;
     border-radius: 4px;
     width: 100%;
@@ -27,7 +26,7 @@
 .locations{
     height: 100%;
     width: 25%;
-    color: #484848;
+    
     padding-left: 40px;
     box-sizing: border-box;
     border-right: solid 1px #DDDDDD;
@@ -35,7 +34,7 @@
 .amenities{
     height: 100%;
     width: 25%;
-    color: #484848;
+    
     padding-left: 40px;
     box-sizing: border-box;
 }
