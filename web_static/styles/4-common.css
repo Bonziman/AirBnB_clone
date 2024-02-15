@@ -9,7 +9,7 @@ body{
     max-width: 1000px;
     margin: 30px auto;
 }
-.container.section{
+.container.filters{
     color: white;
     border: solid 1px #DDDDDD;
     border-radius: 4px;
