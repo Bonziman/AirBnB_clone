@@ -27,7 +27,6 @@
 .locations{
     height: 100%;
     width: 25%;
-    
     padding-left: 40px;
     box-sizing: border-box;
     border-right: solid 1px #DDDDDD;
@@ -38,4 +37,7 @@
     
     padding-left: 40px;
     box-sizing: border-box;
+}
+.locations.h3{
+    font-weight: 600;
 }
