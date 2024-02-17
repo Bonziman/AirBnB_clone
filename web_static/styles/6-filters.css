@@ -71,3 +71,7 @@
 .amenities .popover{
     padding: 40px;
 }
+.amenities .popover li{
+    margin-bottom: 5px;
+}
+
