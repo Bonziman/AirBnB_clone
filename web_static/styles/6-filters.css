@@ -80,3 +80,29 @@
     display: block;
 }
 
+.popover li h2{
+    padding: 0;
+    margin: 0;
+}
+.popover_list{
+    padding:0px;
+    margin:0px;
+    padding-left: 10%;
+}
+li{
+    list-style-type: none;
+    padding-bottom: 5%;
+}
+ul{
+    padding-top: 30px;
+}
+.locations:hover >.popover{
+    visibility: visible;
+    margin-bottom: 50px;
+}
+
+.amenities:hover > .popover{
+    visibility: visible;
+}
+
+
