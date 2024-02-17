@@ -89,20 +89,10 @@
     margin:0px;
     padding-left: 10%;
 }
-li{
-    list-style-type: none;
-    padding-bottom: 5%;
-}
-ul{
-    padding-top: 30px;
-}
-.locations:hover >.popover{
-    visibility: visible;
-    margin-bottom: 50px;
-}
 
+
+.locations:hover >.popover,
 .amenities:hover > .popover{
     visibility: visible;
 }
-
 
