@@ -8,7 +8,7 @@
     margin: 20px;
     border: solid #FF5A5F 1px;
     border-radius: 4px;
-    align-items: center;
+    text-align: center;
 }
 article h2{
     font-size: 30px;
