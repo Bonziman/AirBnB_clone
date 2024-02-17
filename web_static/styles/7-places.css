@@ -2,11 +2,10 @@
     border: 0;
     display: flex;
     flex-direction: column;
-    padding-left: 30px;
 }
 .places h1{
     font-size: 30px;
-
+    margin: 10px 0px 0px 10px;
 }
 .places article{
     width: 390px;
@@ -15,8 +14,15 @@
     border: solid #FF5A5F 1px;
     border-radius: 4px;
     text-align: center;
+    box-sizing: border-box;
 }
 article h2{
     font-size: 30px;
     margin: 0px;
+}
+.articles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
 }
