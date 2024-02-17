@@ -75,7 +75,7 @@
 .amenities .popover li{
     margin: 0px 0px 5px 0px;
 }
-.amenities:hover~.amenities .popover{
+.amenities:hover .popover{
     display: block;
 }
 
