@@ -57,6 +57,7 @@
     border-radius: 4px;
     box-sizing: border-box;
     padding: 10px 0px 10px 20px;
+    list-style-type: none;
 }
 .popover h2{
     font-size: 16px;
