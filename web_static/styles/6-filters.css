@@ -67,9 +67,7 @@
     margin-bottom: 0px;
     margin-top: 40px;
 }
-.popover li{
-    margin: 5px 0px 0px 15px;
-}
+
 .amenities .popover{
     padding: 40px;
 }
@@ -81,14 +79,10 @@
     display: block;
 }
 
-.popover li h2{
-    padding: 0;
-    margin: 0;
-}
 .popover_list{
     padding:0px;
     margin:0px;
-    padding-left: 10%;
+    padding-left: 20px;
     list-style-type: none;
 }
 
