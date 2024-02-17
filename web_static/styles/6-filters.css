@@ -59,6 +59,7 @@
     padding: 0px 0px 10px 20px;
     margin: 0px;
     display: none;
+    list-style-type: none;
 
 }
 .popover h2{
