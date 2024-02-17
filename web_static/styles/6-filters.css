@@ -53,3 +53,6 @@
 .popover{
     background-color: #FAFAFA;
 }
+.popover h2{
+    font-size: 16px;
+}
