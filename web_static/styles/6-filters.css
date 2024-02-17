@@ -58,7 +58,7 @@
     box-sizing: border-box;
     padding: 0px 0px 10px 20px;
     list-style-type: none;
-    
+
 }
 .popover h2{
     font-size: 16px;
@@ -67,4 +67,7 @@
 }
 .popover li{
     margin: 5px 0px 0px 15px;
+}
+.amenities .popover{
+    padding: 40px;
 }
