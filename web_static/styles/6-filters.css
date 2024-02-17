@@ -35,6 +35,7 @@
     width: 25%;
     box-sizing: border-box;
     margin: 0px;
+    padding-left: 0px;
 }
 .locations h3,
 .amenities h3{
