@@ -78,4 +78,7 @@
 .amenities:hover .popover{
     display: block;
 }
+.locations:hover .popover{
+    display: block;
+}
 
