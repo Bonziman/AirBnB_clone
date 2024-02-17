@@ -1,5 +1,5 @@
 .places{
-    display: flex;
+    display: flexbox;
 }
 .places h1{
     font-size: 30px;
