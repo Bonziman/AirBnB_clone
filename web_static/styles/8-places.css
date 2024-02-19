@@ -2,6 +2,7 @@
     border: 0;
     display: flex;
     flex-direction: column;
+    margin-bottom: 70px;
 }
 .places h1{
     font-size: 30px;

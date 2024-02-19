@@ -29,6 +29,7 @@
     width: 25%;
     box-sizing: border-box;
     border-right: solid 1px #DDDDDD;
+    position: relative;
 }
 .amenities{
     height: 100%;
@@ -36,6 +37,7 @@
     box-sizing: border-box;
     margin: 0px;
     padding-left: 0px;
+    position: relative;
 }
 .locations h3,
 .amenities h3{
@@ -60,7 +62,8 @@
     margin: 0px;
     display: none;
     list-style-type: none;
-
+    z-index: 9999;
+    position: absolute;
 }
 .popover h2{
     font-size: 16px;
